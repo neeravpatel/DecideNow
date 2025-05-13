@@ -31,7 +31,7 @@
 
 ```bash
 git clone https://github.com/neeravpatel/DecideNow.git
-cd PassBlox
+cd DecideNow
 ```
 
 ### 2. Install dependencies
