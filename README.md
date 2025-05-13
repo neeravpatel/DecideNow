@@ -6,12 +6,12 @@
 
 ## 🌟 Features
 
-- 🌀 Customizable spinning wheel
-- ➕ Add unlimited items (names, dishes, ideas, etc.)
-- 🎨 Change wheel colors and label styles
-- 🧾 Use or edit pre-made templates (e.g., "What to Eat", "Team Picker")
 - 🎉 Spin animation with result display
-- 📤 Share wheels or results via link/image
+- 🌀 Customizable spinning wheel (coming soon)
+- ➕ Add unlimited items (names, dishes, ideas, etc.) (coming soon)
+- 🎨 Change wheel colors and label styles (coming soon)
+- 🧾 Use or edit pre-made templates (e.g., "What to Eat", "Team Picker") (coming soon)
+- 📤 Share wheels or results via link/image (coming soon)
 
 ---
 
@@ -27,15 +27,21 @@
 
 ## 🔧 Project Setup
 
+### 1. Clone the repo
+
 ```bash
-# Install dependencies
+git clone https://github.com/neeravpatel/DecideNow.git
+cd PassBlox
+```
+
+### 2. Install dependencies
+
+```bash
 npm install
+```
 
-# Run local dev server
+### 3. Start development server
+
+```bash
 npm run dev
-
-# Run tests
-npm run test
-
-# Build for production
-npm run build
+```
