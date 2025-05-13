@@ -6,7 +6,6 @@
 
 ## 🌟 Features
 
-### Features
 - 🌀 Customizable spinning wheel
 - ➕ Add unlimited items (names, dishes, ideas, etc.)
 - 🎨 Change wheel colors and label styles
