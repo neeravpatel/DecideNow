@@ -137,7 +137,6 @@ const drawWheel = () => {
 };
 
 const highlightSelectedItem = (index: number) => {
-  // Highlight the selected item (optional enhancement)
   const canvas = canvasRef.value;
   if (!canvas) return;
 
@@ -146,8 +145,7 @@ const highlightSelectedItem = (index: number) => {
 
   const { width, height } = canvas;
   const radius = width / 2;
-  const arc = (2 * Math.PI) / props.items.length;
-  const startAngle = index * arc;
+  const arc = getArc();
 
   ctx.clearRect(0, 0, width, height);
   ctx.save();
@@ -156,6 +154,7 @@ const highlightSelectedItem = (index: number) => {
 
   props.items.forEach((item, i) => {
     const startAngle = i * arc;
+
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.arc(0, 0, radius, startAngle, startAngle + arc);
@@ -164,7 +163,6 @@ const highlightSelectedItem = (index: number) => {
     ctx.fill();
     ctx.stroke();
 
-    // Text
     ctx.save();
     ctx.fillStyle = "#fff";
     ctx.rotate(startAngle + arc / 2);
