@@ -1,44 +1,3 @@
-<template>
-  <div
-    class="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800"
-  >
-    <div class="flex flex-col items-center gap-4 relative w-fit">
-      <!-- Pointer -->
-      <div class="absolute top-1/2 right-[-20px] translate-y-[-50%] z-10">
-        <div
-          class="w-0 h-0 border-l-[12px] border-r-[12px] border-b-[20px] border-l-transparent border-r-transparent border-b-red-500"
-          style="transform: rotate(-90deg)"
-        ></div>
-      </div>
-
-      <!-- Wheel -->
-      <canvas
-        ref="canvasRef"
-        :width="size"
-        :height="size"
-        class="rounded-full shadow-lg"
-      ></canvas>
-    </div>
-
-    <!-- Spin Button -->
-    <div class="mt-4">
-      <button
-        @click="spin"
-        class="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"
-      >
-        🎯 Spin
-      </button>
-    </div>
-
-    <!-- Selected Item Text -->
-    <div v-if="selected" class="mt-4">
-      <p class="text-xl font-semibold text-green-600">
-        Selected: {{ selected }}
-      </p>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
 
@@ -58,9 +17,18 @@ const angle = ref(0);
 // Calculate arc angle for each item
 const getArc = () => (2 * Math.PI) / props.items.length;
 
+const playSound = (src: string) => {
+  const audio = new Audio(src);
+  audio.currentTime = 0; // Reset audio to start
+  audio.play().catch((err) => console.error("Audio play failed:", err));
+};
+
 // Main spin logic
 const spin = () => {
   selected.value = null;
+
+  playSound("/spin.mp3");
+
   const arc = getArc();
 
   const fullSpins = 5;
@@ -89,6 +57,7 @@ const spin = () => {
       const index = Math.floor(adjustedAngle / arc);
       selected.value = props.items[index];
       highlightSelectedItem(index);
+      playSound("/stop.mp3");
     }
   };
 
@@ -118,7 +87,7 @@ const drawWheel = () => {
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.arc(0, 0, radius, startAngle, startAngle + arc);
-    ctx.fillStyle = i % 2 === 0 ? "#4F46E5" : "#6366F1";
+    ctx.fillStyle = i % 2 === 0 ? "#74d4ff" : "#0084d1";
     ctx.fill();
     ctx.stroke();
 
@@ -159,7 +128,7 @@ const highlightSelectedItem = (index: number) => {
     ctx.moveTo(0, 0);
     ctx.arc(0, 0, radius, startAngle, startAngle + arc);
     ctx.fillStyle =
-      i === index ? "#22C55E" : i % 2 === 0 ? "#4F46E5" : "#6366F1"; // Highlight selected item
+      i === index ? "#008236" : i % 2 === 0 ? "#74d4ff" : "#0084d1"; // Highlight selected item
     ctx.fill();
     ctx.stroke();
 
@@ -180,6 +149,47 @@ const highlightSelectedItem = (index: number) => {
 onMounted(drawWheel);
 watch(() => props.items, drawWheel);
 </script>
+
+<template>
+  <div
+    class="flex flex-col items-center justify-center bg-white dark:bg-gray-800 text-gray-800 mx-auto max-w-2xl p-8 rounded-lg"
+  >
+    <div class="flex flex-col items-center gap-4 relative w-fit">
+      <!-- Pointer -->
+      <div class="absolute top-1/2 right-[-15px] translate-y-[-50%] z-10">
+        <div
+          class="w-0 h-0 border-l-[12px] border-r-[12px] border-b-[20px] border-l-transparent border-r-transparent border-b-red-500"
+          style="transform: rotate(-90deg)"
+        ></div>
+      </div>
+
+      <!-- Wheel -->
+      <canvas
+        ref="canvasRef"
+        :width="size"
+        :height="size"
+        class="rounded-full shadow-lg"
+      ></canvas>
+    </div>
+
+    <!-- Spin Button -->
+    <div class="mt-4">
+      <button
+        @click="spin"
+        class="px-4 py-2 bg-sky-600 text-white rounded-xl hover:bg-sky-700 transition"
+      >
+        🎯 Spin
+      </button>
+    </div>
+
+    <!-- Selected Item Text -->
+    <div v-if="selected" class="mt-4">
+      <p class="text-xl font-semibold text-green-600">
+        Selected: {{ selected }}
+      </p>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 canvas {

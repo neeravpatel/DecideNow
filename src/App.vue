@@ -1,27 +1,46 @@
+<script setup lang="ts">
+import WheelSpinner from "./components/WheelSpinner.vue";
+import { useDark, useToggle } from "@vueuse/core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
+</script>
+
 <template>
-  <div class="min-h-screen flex flex-col bg-gray-100 text-gray-800">
-    <!-- Header -->
-    <header class="bg-white shadow-md py-4 px-6 sticky top-0 z-20">
-      <div class="max-w-3xl mx-auto flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-blue-600">🎯 DecideNow</h1>
-        <span class="text-sm text-gray-500">Make choices the fun way</span>
-      </div>
+  <div
+    :class="{ dark: isDark }"
+    class="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900"
+  >
+    <header class="bg-white dark:bg-gray-800 p-4 shadow-md">
+      <h1 class="text-3xl font-bold text-gray-800 dark:text-white text-center">
+        🎯 OptionWheel
+      </h1>
+      <p class="text-center pt-4 text-gray-600 dark:text-gray-300">
+        Make choices the fun way! Spin the wheel and let fate decide.
+      </p>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow flex items-center justify-center p-4">
-      <WheelSpinner :items="['Pizza', 'Sushi', 'Burger', 'Tacos', 'Salad']" />
+    <main class="flex-grow flex justify-center p-4 bg-white dark:bg-gray-700">
+      <div class="w-full max-w-2xl">
+        <WheelSpinner :items="['Pizza', 'Sushi', 'Burger', 'Tacos', 'Salad', 'Pasta', 'Quesadilla', 'Burrito']" />
+      </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white shadow-inner py-3 px-6">
-      <div class="max-w-3xl mx-auto text-center text-sm text-gray-500">
-        Developed by Neerav Patel | Powered by Netlify
-      </div>
+    <footer
+      class="bg-white dark:bg-gray-800 p-4 shadow-md text-center text-gray-500 dark:text-gray-300"
+    >
+      Developed by Neerav Patel | Powered by Netlify
     </footer>
+    <button
+      @click="toggleDark()"
+      class="fixed top-4 right-4 p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+    >
+      <FontAwesomeIcon
+        :icon="isDark ? faSun : faMoon"
+        class="h-6 w-6 text-gray-700 dark:text-gray-300"
+      />
+    </button>
   </div>
 </template>
-
-<script setup lang="ts">
-import WheelSpinner from './components/WheelSpinner.vue'
-</script>
